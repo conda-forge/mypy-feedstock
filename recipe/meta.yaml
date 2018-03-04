@@ -32,7 +32,7 @@ requirements:
 test:
   imports:
     - mypy
-    - mypy.myunit
+    - mypy.plugins
     - mypy.server
     - mypy.test
   commands:
