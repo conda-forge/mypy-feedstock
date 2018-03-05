@@ -1,6 +1,6 @@
 {% set name = "mypy" %}
-{% set version = "0.560" %}
-{% set sha256 = "bd0c9a2fcf0c4f7a54a2b625f466fcc000d415f371298d96fa5d2acc69074aca" %}
+{% set version = "0.570" %}
+{% set sha256 = "83d798f66323f2de6191d66d9ae5ab234e4ee5b400010e19c58d75d308049f25" %}
 
 package:
   name: {{ name|lower }}
@@ -32,7 +32,7 @@ requirements:
 test:
   imports:
     - mypy
-    - mypy.myunit
+    - mypy.plugins
     - mypy.server
     - mypy.test
   commands:
