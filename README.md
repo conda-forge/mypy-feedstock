@@ -19,14 +19,16 @@ inference, gradual typing, generics and union types.
 Current build status
 ====================
 
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/mypy-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/mypy-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/mypy-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/mypy-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/mypy-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/mypy-feedstock/branch/master)
+[![Linux](https://img.shields.io/circleci/project/github/conda-forge/mypy-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/mypy-feedstock)
+[![OSX](https://img.shields.io/travis/conda-forge/mypy-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/mypy-feedstock)
+[![Windows](https://img.shields.io/appveyor/ci/conda-forge/mypy-feedstock/master.svg?label=Windows)](https://ci.appveyor.com/project/conda-forge/mypy-feedstock/branch/master)
 
 Current release info
 ====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/mypy/badges/version.svg)](https://anaconda.org/conda-forge/mypy)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/mypy/badges/downloads.svg)](https://anaconda.org/conda-forge/mypy)
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-mypy-green.svg)](https://anaconda.org/conda-forge/mypy) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/mypy.svg)](https://anaconda.org/conda-forge/mypy) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/mypy.svg)](https://anaconda.org/conda-forge/mypy) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/mypy.svg)](https://anaconda.org/conda-forge/mypy) |
 
 Installing mypy
 ===============
