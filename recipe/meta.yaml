@@ -18,15 +18,15 @@ build:
     - mypy=mypy.__main__:console_entry
     - stubgen=mypy.stubgen:main
     - dmypy=mypy.dmypy:main
-  script: python setup.py install --single-version-externally-managed --record=record.txt
-  skip: True  # [py2k]
+  script: pythom -m pip install . --no-deps --ignore-installed --no-cache-dir
 
 requirements:
-  build:
-    - python
+  host:
+    - python >=3.4
     - setuptools
+    - pip
   run:
-    - python
+    - python >=3.4
     - typed-ast >=1.1.0,<1.2.0
     - psutil >=5.4.0,<5.5.0
 
