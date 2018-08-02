@@ -19,9 +19,7 @@ inference, gradual typing, generics and union types.
 Current build status
 ====================
 
-[![Linux](https://img.shields.io/circleci/project/github/conda-forge/mypy-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/mypy-feedstock)
-[![OSX](https://img.shields.io/travis/conda-forge/mypy-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/mypy-feedstock)
-[![Windows](https://img.shields.io/appveyor/ci/conda-forge/mypy-feedstock/master.svg?label=Windows)](https://ci.appveyor.com/project/conda-forge/mypy-feedstock/branch/master)
+All platforms: ![noarch disabled](https://img.shields.io/badge/noarch-disabled-lightgrey.svg)
 
 Current release info
 ====================
