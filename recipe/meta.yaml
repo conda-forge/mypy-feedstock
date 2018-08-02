@@ -13,6 +13,7 @@ source:
 
 build:
   number: 1000
+  noarch: python
   entry_points:
     - mypy=mypy.__main__:console_entry
     - stubgen=mypy.stubgen:main
