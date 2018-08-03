@@ -18,7 +18,7 @@ build:
     - mypy=mypy.__main__:console_entry
     - stubgen=mypy.stubgen:main
     - dmypy=mypy.dmypy:main
-  script: pythom -m pip install . --no-deps --ignore-installed --no-cache-dir
+  script: python -m pip install . --no-deps --ignore-installed --no-cache-dir
 
 requirements:
   host:
