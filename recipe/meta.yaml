@@ -17,13 +17,13 @@ build:
     - mypy=mypy.__main__:console_entry
     - stubgen=mypy.stubgen:main
     - dmypy=mypy.dmypy:main
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"
   skip: True  # [py2k]
 
 requirements:
   build:
     - python
-    - setuptools
+    - pip
   run:
     - mypy_extensions >=0.4.0,<0.5.0
     - python
