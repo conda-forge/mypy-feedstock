@@ -25,6 +25,7 @@ requirements:
     - python
     - setuptools
   run:
+    - mypy_extensions >=0.4.0,<0.5.0
     - python
     - typed-ast >=1.1.0,<1.2.0
     - psutil >=5.4.0,<5.5.0
