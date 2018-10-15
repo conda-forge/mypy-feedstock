@@ -1,6 +1,6 @@
 {% set name = "mypy" %}
-{% set version = "0.630" %}
-{% set sha256 = "6704586b4c2bf7dfa5e87a422be9ca57db622bab65008245759f3d4baeb219dd" %}
+{% set version = "0.641" %}
+{% set sha256 = "8e071ec32cc226e948a34bbb3d196eb0fd96f3ac69b6843a5aff9bd4efa14455" %}
 
 package:
   name: {{ name|lower }}
