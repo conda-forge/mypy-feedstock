@@ -1,6 +1,6 @@
 {% set name = "mypy" %}
-{% set version = "0.641" %}
-{% set sha256 = "8e071ec32cc226e948a34bbb3d196eb0fd96f3ac69b6843a5aff9bd4efa14455" %}
+{% set version = "0.650" %}
+{% set sha256 = "38d5b5f835a81817dcc0af8d155bce4e9aefa03794fe32ed154d6612e83feafa" %}
 
 package:
   name: {{ name|lower }}
@@ -13,20 +13,20 @@ source:
 
 build:
   number: 1000
+  noarch: python
   entry_points:
     - mypy=mypy.__main__:console_entry
     - stubgen=mypy.stubgen:main
-    - dmypy=mypy.dmypy:main
+    - dmypy=mypy.dmypy:console_entry
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"
-  skip: True  # [py2k]
 
 requirements:
-  build:
+  host:
     - python
     - pip
   run:
     - mypy_extensions >=0.4.0,<0.5.0
-    - python
+    - python >=3.4
     - typed-ast >=1.1.0,<1.2.0
     - psutil >=5.4.0,<5.5.0
 
