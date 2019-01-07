@@ -17,7 +17,7 @@ build:
   entry_points:
     - mypy=mypy.__main__:console_entry
     - stubgen=mypy.stubgen:main
-    - dmypy=mypy.dmypy:main
+    - dmypy=mypy.dmypy:console_entry
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"
 
 requirements:
