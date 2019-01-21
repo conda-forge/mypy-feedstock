@@ -1,34 +1,33 @@
-{% set name = "mypy" %}
-{% set version = "0.650" %}
-{% set sha256 = "38d5b5f835a81817dcc0af8d155bce4e9aefa03794fe32ed154d6612e83feafa" %}
+{% set version = "0.660" %}
 
 package:
-  name: {{ name|lower }}
+  name: mypy
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
+  sha256: 986a7f97808a865405c5fd98fae5ebfa963c31520a56c783df159e9a81e41b3e
 
 build:
-  number: 1000
+  number: 0
   noarch: python
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
   entry_points:
-    - mypy=mypy.__main__:console_entry
-    - stubgen=mypy.stubgen:main
-    - dmypy=mypy.dmypy:console_entry
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"
+    - mypy = mypy.__main__:console_entry
+    - stubgen = mypy.stubgen:main
+    - dmypy = mypy.dmypy:console_entry
 
 requirements:
   host:
-    - python
+    - python >=3.4
     - pip
   run:
     - mypy_extensions >=0.4.0,<0.5.0
     - python >=3.4
-    - typed-ast >=1.1.0,<1.2.0
+    - typed-ast >=1.2.0,<1.3.0
     - psutil >=5.4.0,<5.5.0
+    # or remove typing and use python >=3.5
+    - typing >=3.5.3
 
 test:
   imports:
@@ -45,8 +44,7 @@ about:
   home: http://www.mypy-lang.org/
   license: MIT
   license_family: MIT
-  # https://github.com/python/mypy/issues/4247
-  # license_file: LICENSE
+  license_file: LICENSE
   summary: Optional static typing for Python
   description: |
     Add type annotations to your Python programs, and use mypy to type check
@@ -60,3 +58,4 @@ about:
 extra:
   recipe-maintainers:
     - nehaljwani
+    - ocefpaf
