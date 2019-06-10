@@ -9,7 +9,7 @@ source:
   sha256: 5764f10d27b2e93c84f70af5778941b8f4aa1379b2430f85c827e0f5464e8714
 
 build:
-  number: 1
+  number: 2
   noarch: python
   script: "{{ PYTHON }} -m pip install . --no-deps -vv"
   entry_points:
@@ -25,7 +25,7 @@ requirements:
     - mypy_extensions >=0.4.0,<0.5.0
     - python >=3.5
     - typed-ast >=1.3.1,<1.4.0
-    - psutil >=5.4.0,<5.5.0
+    - psutil >=4.0
 
 test:
   imports:
