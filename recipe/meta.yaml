@@ -23,7 +23,7 @@ requirements:
     - pip
   run:
     - python >=3.5
-    - mypy_extensions >=0.4.0,<0.5.0
+    - mypy_extensions >=0.4.3,<0.5.0
     - typed-ast >=1.4.0,<1.5.0
     - psutil >=4.0
     - typing_extensions >=3.7.4
