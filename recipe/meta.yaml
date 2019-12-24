@@ -1,4 +1,4 @@
-{% set version = "0.750" %}
+{% set version = "0.761" %}
 
 package:
   name: mypy
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 6ecbd0e8e371333027abca0922b0c2c632a5b4739a0c61ffbd0733391e39144c
+  sha256: 85baab8d74ec601e86134afe2bcccd87820f79d2f8d5798c889507d1088287bf
 
 build:
   number: 0
@@ -23,7 +23,7 @@ requirements:
     - pip
   run:
     - python >=3.5
-    - mypy_extensions >=0.4.0,<0.5.0
+    - mypy_extensions >=0.4.3,<0.5.0
     - typed-ast >=1.4.0,<1.5.0
     - psutil >=4.0
     - typing_extensions >=3.7.4
