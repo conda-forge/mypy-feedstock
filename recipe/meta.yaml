@@ -1,4 +1,4 @@
-{% set version = "0.761" %}
+{% set version = "0.770" %}
 
 package:
   name: mypy
@@ -6,12 +6,12 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 85baab8d74ec601e86134afe2bcccd87820f79d2f8d5798c889507d1088287bf
+  sha256: 8a627507ef9b307b46a1fea9513d5c98680ba09591253082b4c48697ba05a4ae
 
 build:
   number: 0
   noarch: python
-  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
   entry_points:
     - mypy = mypy.__main__:console_entry
     - stubgen = mypy.stubgen:main
