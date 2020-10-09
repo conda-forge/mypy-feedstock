@@ -5,9 +5,13 @@ Home: http://www.mypy-lang.org/
 
 Package license: MIT
 
-Feedstock license: BSD 3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/mypy-feedstock/blob/master/LICENSE.txt)
 
 Summary: Optional static typing for Python
+
+Development: https://github.com/python/mypy
+
+Documentation: http://mypy.readthedocs.io
 
 Add type annotations to your Python programs, and use mypy to type check
 them. Mypy is essentially a Python linter on steroids, and it can catch
