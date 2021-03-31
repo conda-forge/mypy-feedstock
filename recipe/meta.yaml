@@ -9,9 +9,11 @@ source:
   sha256: cd07039aa5df222037005b08fbbfd69b3ab0b0bd7a07d7906de75ae52c4e3119
 
 build:
-  number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  number: 1
+  script:
+    - export MYPY_USE_MYPYC=1  # [not win]
+    - set MYPY_USE_MYPYC=1  # [win]
+    - {{ PYTHON }} -m pip install . --no-deps -vv
   entry_points:
     - mypy = mypy.__main__:console_entry
     - stubgen = mypy.stubgen:main
@@ -22,6 +24,9 @@ requirements:
   host:
     - python >=3.5
     - pip
+    - mypy_extensions >=0.4.3,<0.5.0
+    - typed-ast >=1.4.0,<1.5.0
+    - typing_extensions >=3.7.4
   run:
     - python >=3.5
     - mypy_extensions >=0.4.3,<0.5.0
@@ -40,6 +45,8 @@ test:
     - stubgen --help
     - dmypy --help
     - stubtest --help
+    - dir %SP_DIR%\mypy\*.pyd /s /b  # [win]
+    - ls $SP_DIR/mypy/*.so  # [linux]
 
 about:
   home: http://www.mypy-lang.org/
