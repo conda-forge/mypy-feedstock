@@ -7,6 +7,8 @@ package:
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
   sha256: cd07039aa5df222037005b08fbbfd69b3ab0b0bd7a07d7906de75ae52c4e3119
+  patches:
+    - 0001-Drop-Werror.patch
 
 build:
   number: 1
