@@ -21,6 +21,8 @@ build:
     - stubtest = mypy.stubtest:main
 
 requirements:
+  build:
+    - {{ compiler('c') }}
   host:
     - python
     - pip
