@@ -1,4 +1,4 @@
-{% set version = "0.812" %}
+{% set version = "0.902" %}
 
 package:
   name: mypy
@@ -6,12 +6,12 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: cd07039aa5df222037005b08fbbfd69b3ab0b0bd7a07d7906de75ae52c4e3119
+  sha256: 9236c21194fde5df1b4d8ebc2ef2c1f2a5dc7f18bcbea54274937cae2e20a01c
   patches:
     - 0001-Drop-Werror.patch
 
 build:
-  number: 2
+  number: 0
   script:
     - export MYPY_USE_MYPYC=1  # [not win]
     - set MYPY_USE_MYPYC=1  # [win]
@@ -29,13 +29,17 @@ requirements:
     - python
     - pip
     - mypy_extensions >=0.4.3,<0.5.0
-    - typed-ast >=1.4.0,<1.5.0
+    - typed-ast >=1.4.0,<1.5.0  # [py<38]
     - typing_extensions >=3.7.4
+    - types_toml >=0.0
+    - types_typed_ast >=1.4.0,<1.5.0
+    - toml
   run:
     - python
     - mypy_extensions >=0.4.3,<0.5.0
-    - typed-ast >=1.4.0,<1.5.0
+    - typed-ast >=1.4.0,<1.5.0  # [py<38]
     - typing_extensions >=3.7.4
+    - toml
     # extra: dmypy
     - psutil >=4.0
 
@@ -44,6 +48,7 @@ test:
     - mypy
     - mypy.plugins
     - mypy.server
+    - mypy.dmypy
   commands:
     - mypy --help
     - stubgen --help
