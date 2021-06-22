@@ -1,4 +1,4 @@
-{% set version = "0.902" %}
+{% set version = "0.910" %}
 
 package:
   name: mypy
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 9236c21194fde5df1b4d8ebc2ef2c1f2a5dc7f18bcbea54274937cae2e20a01c
+  sha256: 704098302473cb31a218f1775a873b376b30b4c18229421e9e9dc8916fd16150
   patches:
     - 0001-Drop-Werror.patch
 
