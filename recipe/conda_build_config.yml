@@ -1,0 +1,2 @@
+MACOSX_DEPLOYMENT_TARGET:  # [arm64]
+  - '11.0'                 # [arm64]
