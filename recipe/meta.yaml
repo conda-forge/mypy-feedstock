@@ -11,7 +11,7 @@ source:
     - 0001-Drop-Werror.patch
 
 build:
-  number: 0
+  number: 1
   script:
     - export MYPY_USE_MYPYC=1  # [not (win or (osx and arm64))]
     - set MYPY_USE_MYPYC=1     # [win]
