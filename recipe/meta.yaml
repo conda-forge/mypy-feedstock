@@ -8,7 +8,8 @@ source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
   sha256: 704098302473cb31a218f1775a873b376b30b4c18229421e9e9dc8916fd16150
   patches:
-    - 0001-Drop-Werror.patch
+    - patches/0001-Drop-Werror.patch
+    - patches/0002-mypyc-fix-build-on-windows-11316.patch
 
 build:
   number: 1
