@@ -1,0 +1,38 @@
+From 8b106c1c634e8c200794fcbef4f546d356b1fc96 Mon Sep 17 00:00:00 2001
+From: Shantanu <12621235+hauntsaninja@users.noreply.github.com>
+Date: Tue, 12 Oct 2021 02:53:31 -0700
+Subject: [PATCH 2/2] [mypyc] fix build on windows (#11316)
+
+Trying to fix https://github.com/mypyc/mypy_mypyc-wheels/pull/28,
+not sure why other windows builds don't complain...
+
+```
+build\misc_ops.c(515): error C2065: 'ssize_t': undeclared identifier
+build\misc_ops.c(515): error C2146: syntax error: missing ';' before identifier 'n'
+build\misc_ops.c(515): error C2065: 'n': undeclared identifier
+build\misc_ops.c(517): error C2065: 'n': undeclared identifier
+build\misc_ops.c(520): error C2065: 'n': undeclared identifier
+build\misc_ops.c(521): error C2065: 'n': undeclared identifier
+```
+
+Co-authored-by: hauntsaninja <>
+---
+ mypyc/lib-rt/misc_ops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mypyc/lib-rt/misc_ops.c b/mypyc/lib-rt/misc_ops.c
+index 0701ca9d7..0cd4ab40a 100644
+--- a/mypyc/lib-rt/misc_ops.c
++++ b/mypyc/lib-rt/misc_ops.c
+@@ -512,7 +512,7 @@ int CPySequence_CheckUnpackCount(PyObject *sequence, Py_ssize_t expected) {
+ 
+ // Parse an integer (size_t) encoded as a variable-length binary sequence.
+ static const char *parse_int(const char *s, size_t *len) {
+-    ssize_t n = 0;
++    Py_ssize_t n = 0;
+     while ((unsigned char)*s >= 0x80) {
+         n = (n << 7) + (*s & 0x7f);
+         s++;
+-- 
+2.33.1
+
