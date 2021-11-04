@@ -12,7 +12,7 @@ source:
     - patches/0002-mypyc-fix-build-on-windows-11316.patch
 
 build:
-  number: 1
+  number: 2
   script:
     - export MYPY_USE_MYPYC=1  # [not (win or (osx and arm64))]
     - set MYPY_USE_MYPYC=1     # [win]
