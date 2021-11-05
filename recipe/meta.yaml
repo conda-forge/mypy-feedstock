@@ -10,6 +10,7 @@ source:
   patches:
     - patches/0001-Drop-Werror.patch
     - patches/0002-mypyc-fix-build-on-windows-11316.patch
+    - patches/0003-detect-conda-gcc-11112.patch
 
 build:
   number: 2
