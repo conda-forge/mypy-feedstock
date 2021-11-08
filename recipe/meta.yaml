@@ -15,7 +15,7 @@ source:
 build:
   number: 2
   script:
-    - export MYPY_USE_MYPYC=1  # [not (win or (osx and arm64) or (py==310 and aarch64 and linux))]
+    - export MYPY_USE_MYPYC=1  # [not (win or (py==310 and aarch64 and linux))]
     - set MYPY_USE_MYPYC=1     # [win]
     # mypy searches for <>-stubs in site.getsitepackages()
     # which points to $SP_DIR, even in cross-python
