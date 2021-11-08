@@ -1,0 +1,25 @@
+From fab534bcc74806d76dba66264490c0b3eddf39dc Mon Sep 17 00:00:00 2001
+From: "Michael R. Crusoe" <1330696+mr-c@users.noreply.github.com>
+Date: Tue, 21 Sep 2021 07:20:26 +0200
+Subject: [PATCH] Detect conda gcc for -Wno-unused-but-set-variable as well
+ (#11112)
+
+Cherry-picked from 0.920 https://github.com/python/mypy/pull/11316
+
+---
+ mypyc/build.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mypyc/build.py b/mypyc/build.py
+index ccbb5a547b0..1834b9db233 100644
+--- a/mypyc/build.py
++++ b/mypyc/build.py
+@@ -508,7 +508,7 @@ def mypycify(
+             '-Wno-unreachable-code', '-Wno-unused-variable',
+             '-Wno-unused-command-line-argument', '-Wno-unknown-warning-option',
+         ]
+-        if 'gcc' in compiler.compiler[0]:
++        if 'gcc' in compiler.compiler[0] or 'gnu-cc' in compiler.compiler[0]:
+             # This flag is needed for gcc but does not exist on clang.
+             cflags += ['-Wno-unused-but-set-variable']
+     elif compiler.compiler_type == 'msvc':

@@ -10,11 +10,12 @@ source:
   patches:
     - patches/0001-Drop-Werror.patch
     - patches/0002-mypyc-fix-build-on-windows-11316.patch
+    - patches/0003-detect-conda-gcc-11112.patch
 
 build:
-  number: 1
+  number: 2
   script:
-    - export MYPY_USE_MYPYC=1  # [not (win or (osx and arm64))]
+    - export MYPY_USE_MYPYC=1  # [not (win or (osx and arm64) or (py==310 and aarch64 and linux))]
     - set MYPY_USE_MYPYC=1     # [win]
     - {{ PYTHON }} -m pip install . --no-deps -vv
   entry_points:
@@ -58,7 +59,7 @@ test:
     - dmypy --help
     - stubtest --help
     - dir %SP_DIR%\mypy\*.pyd /s /b  # [win]
-    - ls $SP_DIR/mypy/*.so  # [linux]
+    - ls $SP_DIR/mypy/*.so  # [linux and not (aarch64 and py==310)]
 
 about:
   home: http://www.mypy-lang.org/
