@@ -8,14 +8,14 @@ source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
   sha256: 704098302473cb31a218f1775a873b376b30b4c18229421e9e9dc8916fd16150
   patches:
-    - patches/0001-Drop-Werror.patch
-    - patches/0002-mypyc-fix-build-on-windows-11316.patch
-    - patches/0003-detect-conda-gcc-11112.patch
+    - patches/0001-Reduce-amount-of-debug-info-injected-in-extension-mo.patch
+    - patches/0002-fix-build-on-windows-11316.patch
+    - patches/0003-Detect-conda-gcc-for-Wno-unused-but-set-variable-as-.patch
 
 build:
-  number: 2
+  number: 3
   script:
-    - export MYPY_USE_MYPYC=1  # [not (win or (py==310 and aarch64 and linux))]
+    - export MYPY_USE_MYPYC=1  # [not win]
     - set MYPY_USE_MYPYC=1     # [win]
     # mypy searches for <>-stubs in site.getsitepackages()
     # which points to $SP_DIR, even in cross-python
