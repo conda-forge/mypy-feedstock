@@ -13,7 +13,7 @@ source:
     - patches/0003-Detect-conda-gcc-for-Wno-unused-but-set-variable-as-.patch
 
 build:
-  number: 3
+  number: 4 
   script:
     - export MYPY_USE_MYPYC=1  # [not win]
     - set MYPY_USE_MYPYC=1     # [win]
