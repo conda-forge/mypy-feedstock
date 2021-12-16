@@ -1,4 +1,4 @@
-{% set version = "0.910" %}
+{% set version = "0.920" %}
 
 package:
   name: mypy
@@ -6,14 +6,14 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 704098302473cb31a218f1775a873b376b30b4c18229421e9e9dc8916fd16150
+  sha256: a55438627f5f546192f13255a994d6d1cf2659df48adcf966132b4379fd9c86b
   patches:
     - patches/0001-Reduce-amount-of-debug-info-injected-in-extension-mo.patch
     - patches/0002-fix-build-on-windows-11316.patch
     - patches/0003-Detect-conda-gcc-for-Wno-unused-but-set-variable-as-.patch
 
 build:
-  number: 4 
+  number: 0
   script:
     - export MYPY_USE_MYPYC=1  # [not win]
     - set MYPY_USE_MYPYC=1     # [win]
