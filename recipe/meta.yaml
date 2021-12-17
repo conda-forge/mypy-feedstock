@@ -18,6 +18,7 @@ build:
     # mypy searches for <>-stubs in site.getsitepackages()
     # which points to $SP_DIR, even in cross-python
     - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
+    - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/tomli* $SP_DIR  # [build_platform != target_platform]
     - {{ PYTHON }} -m pip install . --no-deps -vv
   entry_points:
     - mypy = mypy.__main__:console_entry
