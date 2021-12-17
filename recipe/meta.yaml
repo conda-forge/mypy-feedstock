@@ -33,7 +33,7 @@ requirements:
     # mypy's build imports this module, which has a C extension,
     # so it has to be native to the build platform
     - typed-ast >=1.4.0,<1.5.0               # [build_platform != target_platform and py<38]
-    - tomli >=1.1.0                          # [build_platform != target_platform]
+    - tomli >=1.1.0
   host:
     - python
     - pip
