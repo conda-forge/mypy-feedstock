@@ -14,7 +14,9 @@ build:
   number: 0
   script:
     - export MYPY_USE_MYPYC=1  # [not win]
+    - export SETUPTOOLS_USE_DISTUTILS=stdlib  # [not win]
     - set MYPY_USE_MYPYC=1     # [win]
+    - set SETUPTOOLS_USE_DISTUTILS=stdlib  # [win]
     # mypy searches for <>-stubs in site.getsitepackages()
     # which points to $SP_DIR, even in cross-python
     - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
