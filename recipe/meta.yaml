@@ -1,4 +1,4 @@
-{% set version = "0.920" %}
+{% set version = "0.930" %}
 
 package:
   name: mypy
@@ -6,15 +6,17 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: a55438627f5f546192f13255a994d6d1cf2659df48adcf966132b4379fd9c86b
+  sha256: 51426262ae4714cc7dd5439814676e0992b55bcc0f6514eccb4cf8e0678962c2
   patches:
     - patches/0001-Reduce-amount-of-debug-info-injected-in-extension-mo.patch
 
 build:
-  number: 0 
+  number: 0
   script:
     - export MYPY_USE_MYPYC=1  # [not win]
+    - export SETUPTOOLS_USE_DISTUTILS=stdlib  # [not win]
     - set MYPY_USE_MYPYC=1     # [win]
+    - set SETUPTOOLS_USE_DISTUTILS=stdlib  # [win]
     # mypy searches for <>-stubs in site.getsitepackages()
     # which points to $SP_DIR, even in cross-python
     - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
