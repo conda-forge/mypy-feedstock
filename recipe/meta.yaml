@@ -11,9 +11,9 @@ source:
     - patches/0001-Reduce-amount-of-debug-info-injected-in-extension-mo.patch
 
 build:
-  number: 0
+  number: 1
   script:
-    - export MYPY_USE_MYPYC=1  # [not win]
+    - export MYPY_USE_MYPYC=1  # [not win and not (osx and arm64)]
     - export SETUPTOOLS_USE_DISTUTILS=stdlib  # [not win]
     - set MYPY_USE_MYPYC=1     # [win]
     - set SETUPTOOLS_USE_DISTUTILS=stdlib  # [win]
