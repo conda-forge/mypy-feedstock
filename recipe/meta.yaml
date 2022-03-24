@@ -1,4 +1,4 @@
-{% set version = "0.941" %}
+{% set version = "0.942" %}
 
 package:
   name: mypy
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: cbcc691d8b507d54cb2b8521f0a2a3d4daa477f62fe77f0abba41e5febb377b7
+  sha256: 17e44649fec92e9f82102b48a3bf7b4a5510ad0cd22fa21a104826b5db4903e2
   patches:
     - patches/0001-Reduce-amount-of-debug-info-injected-in-extension-mo.patch
 
