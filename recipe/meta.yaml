@@ -1,73 +1,49 @@
-{% set version = "0.942" %}
+{% set name = "mypy" %}
+{% set version = "0.950" %}
 
 package:
-  name: mypy
+  name: {{ name|lower }}
   version: {{ version }}
+  
+build:
+  skip: true  # [py2k]
+  entry_points:
+    - mypy=mypy.__main__:console_entry
+    - stubgen=mypy.stubgen:main
+    - stubtest=mypy.stubtest:main
+    - dmypy=mypy.dmypy.client:console_entry
+    - mypyc=mypyc.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+  number: 0
 
 source:
-  url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 17e44649fec92e9f82102b48a3bf7b4a5510ad0cd22fa21a104826b5db4903e2
-  patches:
-    - patches/0001-Reduce-amount-of-debug-info-injected-in-extension-mo.patch
-
-build:
-  number: 0
-  script:
-    - export MYPY_USE_MYPYC=1  # [not win]
-    - export SETUPTOOLS_USE_DISTUTILS=stdlib  # [not win]
-    - set MYPY_USE_MYPYC=1     # [win]
-    - set SETUPTOOLS_USE_DISTUTILS=stdlib  # [win]
-    # mypy searches for <>-stubs in site.getsitepackages()
-    # which points to $SP_DIR, even in cross-python
-    - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
-    - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/tomli* $SP_DIR  # [build_platform != target_platform]
-    - {{ PYTHON }} -m pip install . --no-deps -vv
-  entry_points:
-    - mypy = mypy.__main__:console_entry
-    - stubgen = mypy.stubgen:main
-    - dmypy = mypy.dmypy.client:console_entry
-    - stubtest = mypy.stubtest:main
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/mypy-{{ version }}.tar.gz
+  sha256: 1b333cfbca1762ff15808a0ef4f71b5d3eed8528b23ea1c3fb50543c867d68de
 
 requirements:
-  build:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - {{ compiler('c') }}
-    # mypy's build imports this module, which has a C extension,
-    # so it has to be native to the build platform
-    - typed-ast >=1.4.0,<1.5.0               # [build_platform != target_platform and py<38]
-    - tomli >=1.1.0
   host:
-    - python
     - pip
-    - mypy_extensions >=0.4.3
-    - typed-ast >=1.4.0,<2  # [py<38]
-    - typing_extensions >=3.10
-    - types_toml >=0.0
-    - types_typed_ast >=1.4.0,<1.5.0
-    - tomli >=1.1.0
-  run:
     - python
+  run:
     - mypy_extensions >=0.4.3
+    - python
+    - tomli >=1.1.0  # [py<311]
     - typed-ast >=1.4.0,<2  # [py<38]
-    - typing_extensions >=3.10
-    - tomli >=1.1.0
-    # extra: dmypy
-    - psutil >=4.0
+    - typing-extensions >=3.10
 
 test:
   imports:
     - mypy
-    - mypy.plugins
-    - mypy.server
-    - mypy.dmypy
+    - mypyc
   commands:
+    - pip check
     - mypy --help
     - stubgen --help
-    - dmypy --help
     - stubtest --help
-    - dir %SP_DIR%\mypy\*.pyd /s /b  # [win]
-    - ls $SP_DIR/mypy/*.so  # [linux and not (aarch64 and py==310)]
+    - dmypy --help
+    - mypyc --help
+  requires:
+    - pip
 
 about:
   home: http://www.mypy-lang.org/
