@@ -1,4 +1,4 @@
-{% set version = "0.942" %}
+{% set version = "0.950" %}
 
 package:
   name: mypy
@@ -6,9 +6,9 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 17e44649fec92e9f82102b48a3bf7b4a5510ad0cd22fa21a104826b5db4903e2
+  sha256: 1b333cfbca1762ff15808a0ef4f71b5d3eed8528b23ea1c3fb50543c867d68de
   patches:
-    - patches/0001-Reduce-amount-of-debug-info-injected-in-extension-mo.patch
+    - patches/0001-Use-Wno-unused-but-set-variable-unconditionally-on-n.patch
 
 build:
   number: 0
