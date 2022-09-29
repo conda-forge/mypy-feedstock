@@ -11,21 +11,21 @@ xref: https://releases.llvm.org/13.0.0/tools/clang/docs/ReleaseNotes.html#new-co
  1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/mypyc/build.py b/mypyc/build.py
-index f5ff0201f..ca427c52f 100644
+index db548b149..4f40a6cd0 100644
 --- a/mypyc/build.py
 +++ b/mypyc/build.py
-@@ -518,10 +518,8 @@ def mypycify(
-             '-Werror', '-Wno-unused-function', '-Wno-unused-label',
-             '-Wno-unreachable-code', '-Wno-unused-variable',
-             '-Wno-unused-command-line-argument', '-Wno-unknown-warning-option',
-+            '-Wno-unused-but-set-variable'
+@@ -533,10 +533,8 @@ def mypycify(
+             "-Wno-unused-variable",
+             "-Wno-unused-command-line-argument",
+             "-Wno-unknown-warning-option",
++            "-Wno-unused-but-set-variable",
          ]
--        if 'gcc' in compiler.compiler[0] or 'gnu-cc' in compiler.compiler[0]:
+-        if "gcc" in compiler.compiler[0] or "gnu-cc" in compiler.compiler[0]:
 -            # This flag is needed for gcc but does not exist on clang.
--            cflags += ['-Wno-unused-but-set-variable']
-     elif compiler.compiler_type == 'msvc':
+-            cflags += ["-Wno-unused-but-set-variable"]
+     elif compiler.compiler_type == "msvc":
          # msvc doesn't have levels, '/O2' is full and '/Od' is disable
-         if opt_level == '0':
+         if opt_level == "0":
 -- 
 2.33.1
 
