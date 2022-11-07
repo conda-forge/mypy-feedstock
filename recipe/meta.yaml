@@ -1,4 +1,4 @@
-{% set version = "0.982" %}
+{% set version = "0.990" %}
 
 package:
   name: mypy
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 85f7a343542dc8b1ed0a888cdd34dca56462654ef23aa673907305b260b3d746
+  sha256: 72382cb609142dba3f04140d016c94b4092bc7b4d98ca718740dc989e5271b8d
   patches:
     - patches/0001-Use-Wno-unused-but-set-variable-unconditionally-on-n.patch
 
