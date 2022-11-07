@@ -15,7 +15,7 @@ Documentation: http://mypy.readthedocs.io
 
 Add type annotations to your Python programs, and use mypy to type check
 them. Mypy is essentially a Python linter on steroids, and it can catch
-many programming errors by analyzing your program, withoutactually having
+many programming errors by analyzing your program, without actually having
 to run it.  Mypy has a powerful type system with features such as type
 inference, gradual typing, generics and union types.
 
@@ -292,6 +292,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@matthiasdiener](https://github.com/matthiasdiener/)
 * [@nehaljwani](https://github.com/nehaljwani/)
 * [@ocefpaf](https://github.com/ocefpaf/)
 

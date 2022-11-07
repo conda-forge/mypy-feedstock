@@ -77,7 +77,7 @@ about:
   description: |
     Add type annotations to your Python programs, and use mypy to type check
     them. Mypy is essentially a Python linter on steroids, and it can catch
-    many programming errors by analyzing your program, withoutactually having
+    many programming errors by analyzing your program, without actually having
     to run it.  Mypy has a powerful type system with features such as type
     inference, gradual typing, generics and union types.
   doc_url: http://mypy.readthedocs.io
@@ -87,3 +87,4 @@ extra:
   recipe-maintainers:
     - nehaljwani
     - ocefpaf
+    - matthiasdiener
