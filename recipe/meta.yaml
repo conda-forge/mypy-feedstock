@@ -9,7 +9,7 @@ source:
   sha256: 72382cb609142dba3f04140d016c94b4092bc7b4d98ca718740dc989e5271b8d
 
 build:
-  number: 0
+  number: 1
   script:
     - export MYPY_USE_MYPYC=1  # [not win]
     - export SETUPTOOLS_USE_DISTUTILS=stdlib  # [not win]
