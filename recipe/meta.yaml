@@ -34,7 +34,7 @@ requirements:
     # mypy's build imports this module, which has a C extension,
     # so it has to be native to the build platform
     - typed-ast >=1.4.0,<2                   # [build_platform != target_platform and py<38]
-    - tomli >=1.1.0  # [py<311]
+    - tomli >=1.1.0
   host:
     - python
     - pip
@@ -44,13 +44,13 @@ requirements:
     - types-setuptools
     - types-psutil
     - types-typed-ast >=1.5.8,<1.6.0
-    - tomli >=1.1.0  # [py<311]
+    - tomli >=1.1.0
   run:
     - python
     - mypy_extensions >=0.4.3
     - typed-ast >=1.4.0,<2  # [py<38]
     - typing_extensions >=3.10
-    - tomli >=1.1.0  # [py<311]
+    - tomli >=1.1.0
     # extra: dmypy
     - psutil >=4.0
 
