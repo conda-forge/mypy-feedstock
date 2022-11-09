@@ -92,6 +92,7 @@ outputs:
       host:
         - python
       run:
+        - python
         - {{ pin_subpackage("mypy", exact=True) }}
         - gcc_linux-64     # [linux]
         - clang_osx-64     # [osx]
