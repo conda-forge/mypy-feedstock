@@ -73,15 +73,16 @@ outputs:
         - pip
       imports:
         - mypy
+        - mypy.dmypy
         - mypy.plugins
         - mypy.server
-        - mypy.dmypy
-        - mypy.mypyc
+        - mypyc
       commands:
         - pip check
-        - mypy --help
-        - stubgen --help
         - dmypy --help
+        - mypy --help
+        - mypyc --help
+        - stubgen --help
         - stubtest --help
         - dir %SP_DIR%\mypy\*.pyd /s /b  # [win]
         - ls $SP_DIR/mypy/*.so  # [linux and not (aarch64 and py==310)]
