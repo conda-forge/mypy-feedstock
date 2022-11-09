@@ -92,13 +92,9 @@ outputs:
       host:
         - python
       run:
-        - python
         - {{ pin_subpackage("mypy", exact=True) }}
-        - gcc_linux-64       # [linux and x86]
-        - gcc_linux-aarch64  # [linux and aarch64]
-        - gcc_linux-ppc64le  # [linux and ppc64le]
-        - clang_osx-64       # [osx]
-        - m2w64-toolchain    # [win]
+        - c-compiler
+        - python
     test:
       files:
         - test_mypyc.py
