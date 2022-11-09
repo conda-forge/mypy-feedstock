@@ -105,7 +105,7 @@ outputs:
       commands:
         - pip check
         - mypyc --help
-        - python test_mypyc.py  # [build_platform != target_platform]
+        - python test_mypyc.py  # [not(aarch64 or ppc64le)]
     about:
       home: https://mypyc.readthedocs.io
       license: MIT
