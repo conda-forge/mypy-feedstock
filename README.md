@@ -1,7 +1,7 @@
 About mypy
 ==========
 
-Home: http://www.mypy-lang.org/
+Home: http://mypy-lang.org
 
 Package license: MIT
 
@@ -219,6 +219,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-mypy-green.svg)](https://anaconda.org/conda-forge/mypy) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/mypy.svg)](https://anaconda.org/conda-forge/mypy) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/mypy.svg)](https://anaconda.org/conda-forge/mypy) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/mypy.svg)](https://anaconda.org/conda-forge/mypy) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-mypyc-green.svg)](https://anaconda.org/conda-forge/mypyc) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/mypyc.svg)](https://anaconda.org/conda-forge/mypyc) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/mypyc.svg)](https://anaconda.org/conda-forge/mypyc) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/mypyc.svg)](https://anaconda.org/conda-forge/mypyc) |
 
 Installing mypy
 ===============
@@ -230,16 +231,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `mypy` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `mypy, mypyc` can be installed with `conda`:
 
 ```
-conda install mypy
+conda install mypy mypyc
 ```
 
 or with `mamba`:
 
 ```
-mamba install mypy
+mamba install mypy mypyc
 ```
 
 It is possible to list all of the versions of `mypy` available on your platform with `conda`:
@@ -334,6 +335,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@bollwyvl](https://github.com/bollwyvl/)
 * [@matthiasdiener](https://github.com/matthiasdiener/)
 * [@nehaljwani](https://github.com/nehaljwani/)
 * [@ocefpaf](https://github.com/ocefpaf/)

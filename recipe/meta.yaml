@@ -1,7 +1,7 @@
 {% set version = "0.990" %}
 
 package:
-  name: mypy
+  name: mypy-split
   version: {{ version }}
 
 source:
@@ -9,67 +9,129 @@ source:
   sha256: 72382cb609142dba3f04140d016c94b4092bc7b4d98ca718740dc989e5271b8d
 
 build:
-  number: 1
-  script:
-    - export MYPY_USE_MYPYC=1  # [not win]
-    - export SETUPTOOLS_USE_DISTUTILS=stdlib  # [not win]
-    - set MYPY_USE_MYPYC=1     # [win]
-    - set SETUPTOOLS_USE_DISTUTILS=stdlib  # [win]
-    # mypy searches for <>-stubs in site.getsitepackages()
-    # which points to $SP_DIR, even in cross-python
-    - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
-    - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/tomli* $SP_DIR  # [build_platform != target_platform]
-    - {{ PYTHON }} -m pip install . --no-deps -vv
-  entry_points:
-    - mypy = mypy.__main__:console_entry
-    - stubgen = mypy.stubgen:main
-    - dmypy = mypy.dmypy.client:console_entry
-    - stubtest = mypy.stubtest:main
+  number: 2
 
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - {{ compiler('c') }}
-    # mypy's build imports this module, which has a C extension,
-    # so it has to be native to the build platform
-    - typed-ast >=1.4.0,<2                   # [build_platform != target_platform and py<38]
-    - tomli >=1.1.0
   host:
     - python
-    - pip
-    - mypy_extensions >=0.4.3
-    - typed-ast >=1.4.0,<2  # [py<38]
-    - typing_extensions >=3.10
-    - types-setuptools
-    - types-psutil
-    - types-typed-ast >=1.5.8,<1.6.0
-    - tomli >=1.1.0
-  run:
-    - python
-    - mypy_extensions >=0.4.3
-    - typed-ast >=1.4.0,<2  # [py<38]
-    - typing_extensions >=3.10
-    - tomli >=1.1.0
-    # extra: dmypy
-    - psutil >=4.0
 
-test:
-  imports:
-    - mypy
-    - mypy.plugins
-    - mypy.server
-    - mypy.dmypy
-  commands:
-    - mypy --help
-    - stubgen --help
-    - dmypy --help
-    - stubtest --help
-    - dir %SP_DIR%\mypy\*.pyd /s /b  # [win]
-    - ls $SP_DIR/mypy/*.so  # [linux and not (aarch64 and py==310)]
+outputs:
+  - name: mypy
+    build:
+      script:
+        - export MYPY_USE_MYPYC=1  # [not win]
+        - export SETUPTOOLS_USE_DISTUTILS=stdlib  # [not win]
+        - set MYPY_USE_MYPYC=1     # [win]
+        - set SETUPTOOLS_USE_DISTUTILS=stdlib  # [win]
+        # mypy searches for <>-stubs in site.getsitepackages()
+        # which points to $SP_DIR, even in cross-python
+        - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
+        - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/tomli* $SP_DIR  # [build_platform != target_platform]
+        - {{ PYTHON }} -m pip install . --no-deps -vv
+      entry_points:
+        - mypy = mypy.__main__:console_entry
+        - stubgen = mypy.stubgen:main
+        - dmypy = mypy.dmypy.client:console_entry
+        - stubtest = mypy.stubtest:main
+        # CLI provided here, but doesn't depend on a compiler
+        - mypyc = mypyc.__main__:main
+
+    requirements:
+      build:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - {{ compiler('c') }}
+        # mypy's build imports this module, which has a C extension,
+        # so it has to be native to the build platform
+        - typed-ast >=1.4.0,<2                   # [build_platform != target_platform and py<38]
+        - tomli >=1.1.0
+      host:
+        - python
+        - pip
+        - mypy_extensions >=0.4.3
+        - typed-ast >=1.4.0,<2  # [py<38]
+        - typing_extensions >=3.10
+        - types-setuptools
+        - types-psutil
+        - types-typed-ast >=1.5.8,<1.6.0
+        - tomli >=1.1.0
+      run:
+        - python
+        - mypy_extensions >=0.4.3
+        - typed-ast >=1.4.0,<2  # [py<38]
+        - typing_extensions >=3.10
+        - tomli >=1.1.0
+        # extra: dmypy
+        - psutil >=4.0
+
+    test:
+      requires:
+        - pip
+      imports:
+        - mypy
+        - mypy.dmypy
+        - mypy.plugins
+        - mypy.server
+        - mypyc
+      commands:
+        - pip check
+        - dmypy --help
+        - mypy --help
+        - mypyc --help
+        - stubgen --help
+        - stubtest --help
+        - dir %SP_DIR%\mypy\*.pyd /s /b  # [win]
+        - ls $SP_DIR/mypy/*.so  # [linux and not (aarch64 and py==310)]
+
+  - name: mypyc
+    requirements:
+      host:
+        - python
+      run:
+        - {{ pin_subpackage("mypy", exact=True) }}
+        - c-compiler
+        - python
+    test:
+      files:
+        - test_mypyc.py
+      requires:
+        - pip
+      commands:
+        - pip check
+        - mypyc --help
+        - python test_mypyc.py
+    about:
+      home: https://mypyc.readthedocs.io
+      license: MIT
+      license_family: MIT
+      license_file: LICENSE
+      dev_url: https://github.com/python/mypy/blob/master/mypyc
+      summary: Mypyc compiles Python modules to C extensions. It uses standard Python type hints to generate fast code.
+      description: |
+        The compiled language is a strict, gradually typed Python variant. It
+        restricts the use of some dynamic Python features to gain performance,
+        but it's mostly compatible with standard Python.
+
+        Mypyc uses mypy to perform type checking and type inference. Most type
+        system features in the stdlib typing module are supported.
+
+        Compiled modules can import arbitrary Python modules and third-party
+        libraries. You can compile anything from a single performance-critical
+        module to your entire codebase. You can run the modules you compile also
+        as normal, interpreted Python modules.
+
+        Existing code with type annotations is often 1.5x to 5x faster when
+        compiled. Code tuned for mypyc can be 5x to 10x faster.
+
+        Mypyc currently aims to speed up non-numeric code, such as server
+        applications. Mypyc is also used to compile itself (and mypy).
 
 about:
-  home: http://www.mypy-lang.org/
+  home: http://mypy-lang.org
   license: MIT
   license_family: MIT
   license_file: LICENSE
@@ -84,7 +146,9 @@ about:
   dev_url: https://github.com/python/mypy
 
 extra:
+  feedstock-name: mypy
   recipe-maintainers:
     - nehaljwani
     - ocefpaf
     - matthiasdiener
+    - bollwyvl
