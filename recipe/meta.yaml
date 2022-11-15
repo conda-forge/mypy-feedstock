@@ -93,7 +93,7 @@ outputs:
         - python
       run:
         - {{ pin_subpackage("mypy", exact=True) }}
-        - c-compiler
+        - {{ compiler('c') }}
         - python
     test:
       files:
