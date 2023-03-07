@@ -1,11 +1,14 @@
+About mypy-feedstock
+====================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/mypy-feedstock/blob/main/LICENSE.txt)
+
 About mypy
-==========
+----------
 
 Home: http://mypy-lang.org
 
 Package license: MIT
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/mypy-feedstock/blob/main/LICENSE.txt)
 
 Summary: Optional static typing for Python
 
@@ -18,6 +21,35 @@ them. Mypy is essentially a Python linter on steroids, and it can catch
 many programming errors by analyzing your program, without actually having
 to run it.  Mypy has a powerful type system with features such as type
 inference, gradual typing, generics and union types.
+
+About mypyc
+-----------
+
+Home: https://mypyc.readthedocs.io
+
+Package license: MIT
+
+Summary: Mypyc compiles Python modules to C extensions. It uses standard Python type hints to generate fast code.
+
+Development: https://github.com/python/mypy/blob/master/mypyc
+
+The compiled language is a strict, gradually typed Python variant. It
+restricts the use of some dynamic Python features to gain performance,
+but it's mostly compatible with standard Python.
+
+Mypyc uses mypy to perform type checking and type inference. Most type
+system features in the stdlib typing module are supported.
+
+Compiled modules can import arbitrary Python modules and third-party
+libraries. You can compile anything from a single performance-critical
+module to your entire codebase. You can run the modules you compile also
+as normal, interpreted Python modules.
+
+Existing code with type annotations is often 1.5x to 5x faster when
+compiled. Code tuned for mypyc can be 5x to 10x faster.
+
+Mypyc currently aims to speed up non-numeric code, such as server
+applications. Mypyc is also used to compile itself (and mypy).
 
 
 Current build status
