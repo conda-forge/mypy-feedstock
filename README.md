@@ -3,6 +3,7 @@ About mypy-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/mypy-feedstock/blob/main/LICENSE.txt)
 
+
 About mypy
 ----------
 
@@ -21,6 +22,7 @@ them. Mypy is essentially a Python linter on steroids, and it can catch
 many programming errors by analyzing your program, without actually having
 to run it.  Mypy has a powerful type system with features such as type
 inference, gradual typing, generics and union types.
+
 
 About mypyc
 -----------
