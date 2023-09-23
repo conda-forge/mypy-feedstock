@@ -47,7 +47,7 @@ outputs:
         - {{ compiler('c') }}
         - tomli >=1.1.0
       host:
-        - mypy_extensions >=0.4.3
+        - mypy_extensions >=1.1.0
         - pip
         - python
         - setuptools >=40.6.2
