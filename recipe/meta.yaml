@@ -31,7 +31,7 @@ outputs:
         # which points to $SP_DIR, even in cross-python
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/tomli* $SP_DIR  # [build_platform != target_platform]
-        - {{ PYTHON }} -m pip install . --no-deps -vv
+        - {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation
       entry_points:
         - mypy = mypy.__main__:console_entry
         - stubgen = mypy.stubgen:main
@@ -45,26 +45,22 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - {{ compiler('c') }}
-        # mypy's build imports this module, which has a C extension,
-        # so it has to be native to the build platform
-        - typed-ast >=1.4.0,<2                   # [build_platform != target_platform and py<38]
         - tomli >=1.1.0
       host:
-        - python
-        - pip
         - mypy_extensions >=0.4.3
-        - typed-ast >=1.4.0,<2  # [py<38]
-        - typing_extensions >=3.10
-        - types-setuptools
+        - pip
+        - python
+        - setuptools >=40.6.2
+        - tomli >=1.1.0  # [py<311]
         - types-psutil
-        - types-typed-ast >=1.5.8,<1.6.0
-        - tomli >=1.1.0
+        - types-setuptools
+        - typing_extensions >=4.1.0
+        - wheel >=0.30.0
       run:
         - python
-        - mypy_extensions >=0.4.3
-        - typed-ast >=1.4.0,<2  # [py<38]
-        - typing_extensions >=3.10
-        - tomli >=1.1.0
+        - mypy_extensions >=1.1.0
+        - typing_extensions >=4.1.0
+        - tomli >=1.1.0  # [py<311]
         # extra: dmypy
         - psutil >=4.0
 
