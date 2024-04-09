@@ -15,7 +15,7 @@ requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - {{ compiler('c') }}
+    - {{ compiler('c') }}                    # [python_impl == "cpython"]
   host:
     - python
 
@@ -23,30 +23,30 @@ outputs:
   - name: mypy
     build:
       script:
-        - export MYPY_USE_MYPYC=1  # [not win]
-        - export SETUPTOOLS_USE_DISTUTILS=stdlib  # [py<312 and not win]
-        - set MYPY_USE_MYPYC=1     # [win]
+        - export MYPY_USE_MYPYC=1  # [unix and python_impl == "cpython"]
+        - export SETUPTOOLS_USE_DISTUTILS=stdlib  # [py<312 and unix]
+        - set MYPY_USE_MYPYC=1     # [win and python_impl == "cpython"]
         - set SETUPTOOLS_USE_DISTUTILS=stdlib  # [py<312 and win]
         # mypy searches for <>-stubs in site.getsitepackages()
         # which points to $SP_DIR, even in cross-python
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/tomli* $SP_DIR  # [build_platform != target_platform]
-        - {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation
-        - rm -rf $SP_DIR/*-stubs  # [build_platform != target_platform]
-        - rm -rf $SP_DIR/tomli*  # [build_platform != target_platform]
+        - {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation --disable-pip-version-check
+        - rm -rf $SP_DIR/*-stubs $SP_DIR/tomli*  # [build_platform != target_platform]
       entry_points:
         - mypy = mypy.__main__:console_entry
         - stubgen = mypy.stubgen:main
         - dmypy = mypy.dmypy.client:console_entry
+        # doesn't work in pypy
         - stubtest = mypy.stubtest:main
-        # CLI provided here, but doesn't depend on a compiler
+        # CLI provided here, but doesn't depend on a compiler (or work in pypy)
         - mypyc = mypyc.__main__:main
 
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - {{ compiler('c') }}
+        - {{ compiler('c') }}                    # [python_impl == "cpython"]
         - tomli >=1.1.0
       host:
         - mypy_extensions >=1.0.0
@@ -67,6 +67,8 @@ outputs:
         - psutil >=4.0
 
     test:
+      source_files:
+        - mypy_self_check.ini
       requires:
         - pip
       imports:
@@ -74,18 +76,23 @@ outputs:
         - mypy.dmypy
         - mypy.plugins
         - mypy.server
-        - mypyc
+        - mypyc  # [python_impl == "cpython"]
       commands:
         - pip check
         - dmypy --help
         - mypy --help
-        - mypyc --help
+        - mypyc --help  # [python_impl == "cpython"]
         - stubgen --help
-        - stubtest --help
-        - dir %SP_DIR%\mypy\*.pyd /s /b  # [win]
-        - ls $SP_DIR/mypy/*.so  # [linux and not (aarch64 and py==310)]
+        # `stubtest.py` uses `symtable`, not available in pypy
+        - stubtest --help  # [python_impl == "cpython"]
+        - dir %SP_DIR%\mypy\*.pyd /s /b  # [win and python_impl == "cpython"]
+        - ls $SP_DIR/mypy/*.so  # [linux and not (aarch64 and py == 310) and python_impl == "cpython"]
+        # `checker.py` has false-positive for py3.9+ syntax, fails in pypy
+        - mypy --config-file mypy_self_check.ini -p mypy  # [python_impl == "cpython"]
 
   - name: mypyc
+    build:
+      skip: true  # [python_impl != "cpython"]
     requirements:
       host:
         - python
