@@ -1,4 +1,4 @@
-{% set version = "1.9.0" %}
+{% set version = "1.10.0" %}
 
 package:
   name: mypy-split
@@ -6,16 +6,17 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 3cc5da0127e6a478cddd906068496a97a7618a21ce9b54bde5bf7e539c7af974
+  sha256: 3d087fcbec056c4ee34974da493a826ce316947485cef3901f511848e687c131
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - {{ compiler('c') }}                    # [python_impl == "cpython"]
+    - {{ stdlib("c") }}                      # [python_impl == "cpython"]
   host:
     - python
 
@@ -46,6 +47,7 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - {{ compiler('c') }}                    # [python_impl == "cpython"]
+        - {{ stdlib("c") }}                      # [python_impl == "cpython"]
         - tomli >=1.1.0
       host:
         - mypy_extensions >=1.0.0
@@ -100,6 +102,7 @@ outputs:
         - {{ pin_subpackage("mypy", exact=True) }}
         - {{ compiler('c') }}
         - python
+        - setuptools >=50
     test:
       files:
         - test_mypyc.py
