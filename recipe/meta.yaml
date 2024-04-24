@@ -102,6 +102,7 @@ outputs:
         - {{ pin_subpackage("mypy", exact=True) }}
         - {{ compiler('c') }}
         - python
+        - setuptools >=50
     test:
       files:
         - test_mypyc.py
