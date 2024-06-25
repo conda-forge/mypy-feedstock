@@ -1,4 +1,4 @@
-{% set version = "1.10.0" %}
+{% set version = "1.10.1" %}
 
 package:
   name: mypy-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 3d087fcbec056c4ee34974da493a826ce316947485cef3901f511848e687c131
+  sha256: 1f8f492d7db9e3593ef42d4f115f04e556130f2819ad33ab84551403e97dd4c0
 
 build:
   number: 0
