@@ -82,6 +82,8 @@ outputs:
         - mypy.server
         - mypyc  # [python_impl == "cpython"]
       commands:
+        - mkdir tmp || md tmp
+        - cd tmp
         - pip check
         - dmypy --help
         - mypy --help
