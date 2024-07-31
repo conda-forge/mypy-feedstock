@@ -31,6 +31,8 @@ outputs:
         # which points to $SP_DIR, even in cross-python
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/tomli* $SP_DIR   # [build_platform != target_platform]
+        # Work around slow compile times on these systems:
+        - export MYPYC_MULTI_FILE=1  # [(ppc64le or aarch64) and py==312]
         - {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation --disable-pip-version-check
         - rm -rf $SP_DIR/*-stubs $SP_DIR/tomli*                                 # [build_platform != target_platform]
       entry_points:
