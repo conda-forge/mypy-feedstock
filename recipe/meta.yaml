@@ -1,4 +1,4 @@
-{% set version = "1.10.1" %}
+{% set version = "1.11.0" %}
 
 package:
   name: mypy-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 1f8f492d7db9e3593ef42d4f115f04e556130f2819ad33ab84551403e97dd4c0
+  sha256: 93743608c7348772fdc717af4aeee1997293a1ad04bc0ea6efa15bf65385c538
 
 build:
   number: 0
@@ -31,6 +31,8 @@ outputs:
         # which points to $SP_DIR, even in cross-python
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER/site-packages/tomli* $SP_DIR   # [build_platform != target_platform]
+        # Work around slow compile times on these systems:
+        - export MYPYC_MULTI_FILE=1  # [(ppc64le or aarch64) and py==312]
         - {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation --disable-pip-version-check
         - rm -rf $SP_DIR/*-stubs $SP_DIR/tomli*                                 # [build_platform != target_platform]
       entry_points:
