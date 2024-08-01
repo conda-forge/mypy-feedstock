@@ -1,4 +1,4 @@
-{% set version = "1.11.0" %}
+{% set version = "1.11.1" %}
 
 package:
   name: mypy-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 93743608c7348772fdc717af4aeee1997293a1ad04bc0ea6efa15bf65385c538
+  sha256: f404a0b069709f18bbdb702eb3dcfe51910602995de00bd39cea3050b5772d08
 
 build:
   number: 0
@@ -82,6 +82,8 @@ outputs:
         - mypy.server
         - mypyc  # [python_impl == "cpython"]
       commands:
+        - mkdir tmp || md tmp
+        - cd tmp
         - pip check
         - dmypy --help
         - mypy --help
