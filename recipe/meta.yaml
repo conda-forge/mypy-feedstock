@@ -75,7 +75,6 @@ outputs:
       #   - mypy_self_check.ini
       requires:
         - pip
-        - setuptools
       imports:
         - mypy
         - mypy.dmypy
@@ -88,7 +87,6 @@ outputs:
         - pip check
         - dmypy --help
         - mypy --help
-        - mypyc --help  # [python_impl == "cpython"]
         - stubgen --help
         # `stubtest.py` imports `symtable`, not available in pypy
         - stubtest --help                # [python_impl == "cpython"]
@@ -113,7 +111,6 @@ outputs:
         - test_mypyc.py
       requires:
         - pip
-        - setuptools
       commands:
         - pip check
         - mypyc --help
