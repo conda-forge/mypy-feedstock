@@ -75,6 +75,7 @@ outputs:
       #   - mypy_self_check.ini
       requires:
         - pip
+        - setuptools
       imports:
         - mypy
         - mypy.dmypy
@@ -112,6 +113,7 @@ outputs:
         - test_mypyc.py
       requires:
         - pip
+        - setuptools
       commands:
         - pip check
         - mypyc --help
