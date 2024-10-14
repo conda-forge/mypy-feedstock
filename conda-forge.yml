@@ -1,3 +1,6 @@
+azure:
+  settings_linux:
+    swapfile_size: 10GiB
 bot:
   inspection: hint-all
 build_platform:
