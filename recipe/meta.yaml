@@ -1,4 +1,4 @@
-{% set version = "1.11.2" %}
+{% set version = "1.12.0" %}
 
 package:
   name: mypy-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 7f9993ad3e0ffdc95c2a14b66dee63729f021968bff8ad911867579c65d13a79
+  sha256: 65a22d87e757ccd95cbbf6f7e181e6caa87128255eb2b6be901bb71b26d8a99d
 
 build:
   number: 0
@@ -87,7 +87,6 @@ outputs:
         - pip check
         - dmypy --help
         - mypy --help
-        - mypyc --help  # [python_impl == "cpython"]
         - stubgen --help
         # `stubtest.py` imports `symtable`, not available in pypy
         - stubtest --help                # [python_impl == "cpython"]
