@@ -1,4 +1,4 @@
-{% set version = "1.15.0" %}
+{% set version = "1.16.0" %}
 
 package:
   name: mypy-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 404534629d51d3efea5c800ee7c42b72a6554d6c400e6a79eafe15d11341fd43
+  sha256: 84b94283f817e2aa6350a14b4a8fb2a35a53c286f97c9d30f53b63620e7af8ab
 
 build:
   number: 0
@@ -48,23 +48,26 @@ outputs:
       build:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - {{ compiler('c') }}                    # [python_impl == "cpython"]
+        - {{ compiler("c") }}                    # [python_impl == "cpython"]
         - {{ stdlib("c") }}                      # [python_impl == "cpython"]
+        - pathspec >=0.9.0
         - tomli >=1.1.0
       host:
         - mypy_extensions >=1.0.0
+        - pathspec >=0.9.0
         - pip
         - python
-        - setuptools >=40.6.2
+        - setuptools >=75.1.0
         - tomli >=1.1.0  # [py<311]
         - types-psutil
         - types-setuptools
-        - typing_extensions >=4.1.0
+        - typing_extensions >=4.6.0
         - wheel >=0.30.0
       run:
         - python
         - mypy_extensions >=1.0.0
-        - typing_extensions >=4.1.0
+        - pathspec >=0.9.0
+        - typing_extensions >=4.6.0
         - tomli >=1.1.0  # [py<311]
         # extra: dmypy
         - psutil >=4.0
