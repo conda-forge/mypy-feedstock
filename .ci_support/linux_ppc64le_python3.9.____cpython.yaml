@@ -24,6 +24,3 @@ python_impl:
 - cpython
 target_platform:
 - linux-ppc64le
-zip_keys:
-- - python
-  - python_impl
