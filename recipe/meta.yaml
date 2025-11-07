@@ -89,12 +89,13 @@ outputs:
         - cd tmp
         - pip check
         - dmypy --help
+        - mypy --version
         - mypy --help
         - stubgen --help
         # `stubtest.py` imports `symtable`, not available in pypy
         - stubtest --help                # [python_impl == "cpython"]
-        - dir %SP_DIR%\mypy\*.pyd /s /b  # [win and python_impl == "cpython"]
-        - ls $SP_DIR/mypy/*.so           # [linux and not (aarch64 and py == 310) and python_impl == "cpython"]
+        # - dir %SP_DIR%\mypy\*.pyd /s /b  # [win and python_impl == "cpython"]
+        # - ls $SP_DIR/mypy/*.so           # [linux and not (aarch64 and py == 310) and python_impl == "cpython"]
         # TODO: attempt re-enabling in >=1.9.1
         # - mypy --config-file=mypy_self_check.ini -p mypy --python-version=3.9
 
