@@ -29,6 +29,7 @@ outputs:
       script:
         # mypy searches for <>-stubs in site.getsitepackages()
         # which points to $SP_DIR, even in cross-python
+        - ls $BUILD_PREFIX/lib/python$PY_VER*/site-packages                      # [build_platform != target_platform]
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER*/site-packages/*-stubs $SP_DIR  # [build_platform != target_platform]
         - cp -rv $BUILD_PREFIX/lib/python$PY_VER*/site-packages/tomli* $SP_DIR   # [build_platform != target_platform]
         # Work around slow compile times on these systems:
