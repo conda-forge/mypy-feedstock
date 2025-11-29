@@ -1,4 +1,4 @@
-{% set version = "1.18.2" %}
+{% set version = "1.19.0" %}
 
 package:
   name: mypy-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 06a398102a5f203d7477b2923dda3634c36727fa5c237d8f859ef90c42a9924b
+  sha256: f6b874ca77f733222641e5c46e4711648c4037ea13646fd0cdc814c2eaec2528
 
 build:
   number: 0
@@ -15,7 +15,7 @@ requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - {{ compiler('c') }}                    # [python_impl == "cpython"]
+    - {{ compiler("c") }}                    # [python_impl == "cpython"]
     - {{ stdlib("c") }}                      # [python_impl == "cpython"]
   host:
     - python
@@ -48,6 +48,7 @@ outputs:
       build:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - python-librt >=0.6.2                   # [build_platform != target_platform]
         - {{ compiler("c") }}                    # [python_impl == "cpython"]
         - {{ stdlib("c") }}                      # [python_impl == "cpython"]
         - pathspec >=0.9.0
@@ -57,18 +58,19 @@ outputs:
         - pathspec >=0.9.0
         - pip
         - python
+        - python-librt >=0.6.2
         - setuptools >=75.1.0
         - tomli >=1.1.0  # [py<311]
         - types-psutil
         - types-setuptools
         - typing_extensions >=4.6.0
-        - wheel >=0.30.0
       run:
-        - python
         - mypy_extensions >=1.0.0
         - pathspec >=0.9.0
-        - typing_extensions >=4.6.0
+        - python
+        - python-librt >=0.6.2
         - tomli >=1.1.0  # [py<311]
+        - typing_extensions >=4.6.0
         # extra: dmypy
         - psutil >=4.0
 
