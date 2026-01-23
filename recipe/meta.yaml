@@ -9,7 +9,7 @@ source:
   sha256: 19d88bb05303fe63f71dd2c6270daca27cb9401c4ca8255fe50d1d920e0eb9ba
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -110,7 +110,6 @@ outputs:
         - python
       run:
         - {{ pin_subpackage("mypy", exact=True) }}
-        - {{ compiler('c') }}
         - python
         - setuptools >=50
     test:
@@ -118,6 +117,7 @@ outputs:
         - test_mypyc.py
       requires:
         - pip
+        - {{ compiler('c') }}
       commands:
         - pip check
         - mypyc --help
