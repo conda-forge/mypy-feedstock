@@ -48,29 +48,29 @@ outputs:
       build:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - python-librt >=0.6.2                   # [build_platform != target_platform]
+        - python-librt >=0.8.0                   # [build_platform != target_platform]
         - types-psutil                           # [build_platform != target_platform]
         - types-setuptools                       # [build_platform != target_platform]
         - {{ compiler("c") }}                    # [python_impl == "cpython"]
         - {{ stdlib("c") }}                      # [python_impl == "cpython"]
-        - pathspec >=0.9.0
+        - pathspec >=1.0.0
         - tomli >=1.1.0
       host:
         - mypy_extensions >=1.0.0
-        - pathspec >=0.9.0
+        - pathspec >=1.0.0
         - pip
         - python
-        - python-librt >=0.6.2
-        - setuptools >=75.1.0
+        - python-librt >=0.8.0
+        - setuptools >=77.0.3
         - tomli >=1.1.0  # [py<311]
         - types-psutil
         - types-setuptools
         - typing_extensions >=4.6.0
       run:
         - mypy_extensions >=1.0.0
-        - pathspec >=0.9.0
+        - pathspec >=1.0.0
         - python
-        - python-librt >=0.6.2
+        - python-librt >=0.8.0
         - tomli >=1.1.0  # [py<311]
         - typing_extensions >=4.6.0
         # extra: dmypy
