@@ -1,4 +1,4 @@
-{% set version = "1.19.1" %}
+{% set version = "1.20.0" %}
 
 package:
   name: mypy-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/m/mypy/mypy-{{ version }}.tar.gz
-  sha256: 19d88bb05303fe63f71dd2c6270daca27cb9401c4ca8255fe50d1d920e0eb9ba
+  sha256: eb96c84efcc33f0b5e0e04beacf00129dd963b67226b01c00b9dfc8affb464c3
 
 build:
   number: 0
@@ -23,6 +23,7 @@ requirements:
 outputs:
   - name: mypy
     build:
+      skip: true                           # [ppc64le and ("cp314t" in str(python))]
       script_env:
         - MYPY_USE_MYPYC=1                 # [python_impl == "cpython"]
         - SETUPTOOLS_USE_DISTUTILS=stdlib  # [py<312]
@@ -48,29 +49,29 @@ outputs:
       build:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - python-librt >=0.6.2                   # [build_platform != target_platform]
+        - python-librt >=0.8.0                   # [build_platform != target_platform]
         - types-psutil                           # [build_platform != target_platform]
         - types-setuptools                       # [build_platform != target_platform]
         - {{ compiler("c") }}                    # [python_impl == "cpython"]
         - {{ stdlib("c") }}                      # [python_impl == "cpython"]
-        - pathspec >=0.9.0
+        - pathspec >=1.0.0
         - tomli >=1.1.0
       host:
         - mypy_extensions >=1.0.0
-        - pathspec >=0.9.0
+        - pathspec >=1.0.0
         - pip
         - python
-        - python-librt >=0.6.2
-        - setuptools >=75.1.0
+        - python-librt >=0.8.0
+        - setuptools >=77.0.3
         - tomli >=1.1.0  # [py<311]
         - types-psutil
         - types-setuptools
         - typing_extensions >=4.6.0
       run:
         - mypy_extensions >=1.0.0
-        - pathspec >=0.9.0
+        - pathspec >=1.0.0
         - python
-        - python-librt >=0.6.2
+        - python-librt >=0.8.0
         - tomli >=1.1.0  # [py<311]
         - typing_extensions >=4.6.0
         # extra: dmypy
@@ -104,7 +105,7 @@ outputs:
 
   - name: mypyc
     build:
-      skip: true  # [python_impl != "cpython"]
+      skip: true  # [python_impl != "cpython" or (ppc64le and ("cp314t" in str(python)))]
     requirements:
       host:
         - python
