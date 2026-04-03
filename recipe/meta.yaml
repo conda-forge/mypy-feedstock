@@ -23,6 +23,7 @@ requirements:
 outputs:
   - name: mypy
     build:
+      skip: true                           # [ppc64le and ("cp314t" in str(python))]
       script_env:
         - MYPY_USE_MYPYC=1                 # [python_impl == "cpython"]
         - SETUPTOOLS_USE_DISTUTILS=stdlib  # [py<312]
@@ -104,7 +105,7 @@ outputs:
 
   - name: mypyc
     build:
-      skip: true  # [python_impl != "cpython"]
+      skip: true  # [python_impl != "cpython" or (ppc64le and ("cp314t" in str(python)))]
     requirements:
       host:
         - python
