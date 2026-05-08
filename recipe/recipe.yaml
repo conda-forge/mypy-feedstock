@@ -1,0 +1,152 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  version: "2.0.0"
+  ast_serialize_min: "0.3.0"
+  ast_serialize_max: "1.0.0"
+  mypy_extensions_min: "1.0.0"
+  pathspec_min: "1.0.0"
+  python_librt_min: "0.10.0"
+  tomli_min: "1.1.0"
+  typing_extensions_min: "4.6.0"
+
+recipe:
+  name: mypy-split
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/m/mypy/mypy-${{ version }}.tar.gz
+  sha256: 1a9e3900ac5c40f1fe813506c7739da6e6f0eab2729067ebd94bfb0bbba53532
+
+build:
+  number: 0
+
+outputs:
+  - package:
+      name: mypy
+    build:
+      script:
+        content:
+          - ${{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation --disable-pip-version-check
+      python:
+        entry_points:
+          - mypy = mypy.__main__:console_entry
+          - stubgen = mypy.stubgen:main
+          - dmypy = mypy.dmypy.client:console_entry
+          - stubtest = mypy.stubtest:main
+          - mypyc = mypyc.__main__:main
+    requirements:
+      build:
+        - ${{ compiler("c") }}
+        - ${{ stdlib("c") }}
+      host:
+        - ast-serialize >=${{ ast_serialize_min }},<${{ ast_serialize_max }}
+        - mypy_extensions >=${{ mypy_extensions_min }}
+        - pathspec >=${{ pathspec_min }}
+        - pip
+        - python
+        - python-librt >=${{ python_librt_min }}
+        - setuptools >=77.0.3
+        - types-psutil
+        - types-setuptools
+        - typing_extensions >=${{ typing_extensions_min }}
+        - pathspec >=${{ pathspec_min }}
+        - if: match(python, "<3.11")
+          then:
+          - tomli >=${{ tomli_min }}
+      run:
+        - mypy_extensions >=${{ mypy_extensions_min }}
+        - pathspec >=${{ pathspec_min }}
+        - python
+        - python-librt >=${{ python_librt_min }}
+        - typing_extensions >=${{ typing_extensions_min }}
+        # extra: dmypy
+        - psutil >=4.0
+        - if: match(python, "<3.11")
+          then:
+          - tomli >=${{ tomli_min }}
+    tests:
+      - python:
+          imports:
+            - mypy
+            - mypy.dmypy
+            - mypy.plugins
+            - mypy.server
+          pip_check: true
+      - script:
+          - mkdir tmp || md tmp
+          - cd tmp
+          - dmypy --help
+          - mypy --help
+          - stubgen --help
+          - stubtest --help
+          - if: unix
+            then:
+              - ls $SP_DIR/mypy/*.so
+            else:
+              - dir %SP_DIR%\mypy\*.pyd /s /b
+
+  - package:
+      name: mypyc
+    requirements:
+      host:
+        - python
+      run:
+        - ${{ pin_subpackage("mypy", exact=True) }}
+        - ${{ compiler("c") }}
+        - python
+        - setuptools >=50
+    tests:
+      - files:
+          recipe:
+            - test_mypyc.py
+        script:
+          - mypyc --help
+          - python test_mypyc.py
+    about:
+      license: MIT
+      license_file: LICENSE
+      summary: Mypyc compiles Python modules to C extensions. It uses standard Python type hints to generate fast code.
+      description: |
+        The compiled language is a strict, gradually typed Python variant. It
+        restricts the use of some dynamic Python features to gain performance,
+        but it's mostly compatible with standard Python.
+
+        Mypyc uses mypy to perform type checking and type inference. Most type
+        system features in the stdlib typing module are supported.
+
+        Compiled modules can import arbitrary Python modules and third-party
+        libraries. You can compile anything from a single performance-critical
+        module to your entire codebase. You can run the modules you compile also
+        as normal, interpreted Python modules.
+
+        Existing code with type annotations is often 1.5x to 5x faster when
+        compiled. Code tuned for mypyc can be 5x to 10x faster.
+
+        Mypyc currently aims to speed up non-numeric code, such as server
+        applications. Mypyc is also used to compile itself (and mypy).
+      homepage: https://mypyc.readthedocs.io
+      repository: https://github.com/python/mypy/blob/master/mypyc
+
+about:
+  license: MIT
+  license_file: LICENSE
+  summary: Optional static typing for Python
+  description: |
+    Add type annotations to your Python programs, and use mypy to type check
+    them. Mypy is essentially a Python linter on steroids, and it can catch
+    many programming errors by analyzing your program, without actually having
+    to run it.  Mypy has a powerful type system with features such as type
+    inference, gradual typing, generics and union types.
+  homepage: http://mypy-lang.org
+  repository: https://github.com/python/mypy
+  documentation: http://mypy.readthedocs.io
+
+extra:
+  feedstock-name: mypy
+  recipe-maintainers:
+    - nehaljwani
+    - ocefpaf
+    - matthiasdiener
+    - bollwyvl
