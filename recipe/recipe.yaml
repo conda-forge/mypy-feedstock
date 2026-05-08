@@ -10,6 +10,7 @@ context:
   python_librt_min: "0.10.0"
   tomli_min: "1.1.0"
   typing_extensions_min: "4.6.0"
+  py_bin: ${{ "so" if unix else "pyd" }}
 
 recipe:
   name: mypy-split
@@ -27,6 +28,8 @@ outputs:
       name: mypy
     build:
       script:
+        env:
+          MYPY_USE_MYPYC: "1"
         content:
           - ${{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation --disable-pip-version-check
       python:
@@ -56,6 +59,7 @@ outputs:
           then:
           - tomli >=${{ tomli_min }}
       run:
+        - ast-serialize >=${{ ast_serialize_min }},<${{ ast_serialize_max }}
         - mypy_extensions >=${{ mypy_extensions_min }}
         - pathspec >=${{ pathspec_min }}
         - python
@@ -74,6 +78,9 @@ outputs:
             - mypy.plugins
             - mypy.server
           pip_check: true
+      - package_contents:
+          site_packages:
+            - mypy/*.${{ py_bin }}
       - script:
           - mkdir tmp || md tmp
           - cd tmp
@@ -81,11 +88,6 @@ outputs:
           - mypy --help
           - stubgen --help
           - stubtest --help
-          - if: unix
-            then:
-              - ls $SP_DIR/mypy/*.so
-            else:
-              - dir %SP_DIR%\mypy\*.pyd /s /b
 
   - package:
       name: mypyc
