@@ -29,7 +29,7 @@ outputs:
     build:
       script:
         env:
-          MYPY_USE_MYPYC: "1"
+          MYPY_USE_MYPYC: ${{ "1" if use_noarch else "0"}}
         content:
           - ${{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation --disable-pip-version-check
       python:
@@ -48,7 +48,6 @@ outputs:
         - mypy_extensions >=${{ mypy_extensions_min }}
         - pathspec >=${{ pathspec_min }}
         - pip
-        - python
         - python-librt >=${{ python_librt_min }}
         - setuptools >=77.0.3
         - types-psutil
@@ -58,30 +57,59 @@ outputs:
         - if: match(python, "<3.11")
           then:
           - tomli >=${{ tomli_min }}
+        - if: use_noarch
+          then:
+            - python ${{ python_min }}.*
+          else:
+            - python
       run:
         - ast-serialize >=${{ ast_serialize_min }},<${{ ast_serialize_max }}
         - mypy_extensions >=${{ mypy_extensions_min }}
         - pathspec >=${{ pathspec_min }}
-        - python
         - python-librt >=${{ python_librt_min }}
         - typing_extensions >=${{ typing_extensions_min }}
         # extra: dmypy
         - psutil >=4.0
+        - if: use_noarch
+          then:
+            - python ${{ python_min }}.*
+          else:
+            - python
         - if: match(python, "<3.11")
           then:
           - tomli >=${{ tomli_min }}
     tests:
-      - python:
-          imports:
-            - mypy
-            - mypy.dmypy
-            - mypy.plugins
-            - mypy.server
-          pip_check: true
+      - if: use_noarch
+        then:
+        - python:
+            imports:
+              - mypy
+              - mypy.dmypy
+              - mypy.plugins
+              - mypy.server
+            pip_check: true
+        else:
+        - python:
+            imports:
+              - mypy
+              - mypy.dmypy
+              - mypy.plugins
+              - mypy.server
+            pip_check: true
+            python_version:
+              - ${{ python_min }}.*
+              - ${{ python_check_max }}.*
       - package_contents:
           site_packages:
-            - mypy/*.${{ py_bin }}
-      - script:
+            - if: not use_noarch
+              then:
+                - mypy/*.${{ py_bin }}
+      - requirements:
+          run:
+            - if: use_noarch
+              then:
+                - python ${{ python_min }}.*
+        script:
           - mkdir tmp || md tmp
           - cd tmp
           - dmypy --help
@@ -91,6 +119,8 @@ outputs:
 
   - package:
       name: mypyc
+    build:
+      skip: use_noarch
     requirements:
       host:
         - python
