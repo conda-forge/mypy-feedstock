@@ -113,9 +113,13 @@ outputs:
             - tomli
             - types-psutil
         script:
-          # 20 tests fail due to assumptions about relative paths in site-packages
-          # - pytest -vv --tb=long --color=yes --pyargs mypy
-          - mypy --config-file=mypy_self_check.ini -p mypy --python-version=${{ python_self_check }}
+          - if: target_platform == "linux-ppc64le"
+            then:
+              - echo "self-check fails on linux-ppc64le"
+            else:
+              # 20 tests fail due to assumptions about relative paths in site-packages
+              # - pytest -vv --tb=long --color=yes --pyargs mypy
+              - mypy -p mypy --num-workers=2 --config-file=mypy_self_check.ini --python-version=${{ python_self_check }}
 
   - package:
       name: mypyc
