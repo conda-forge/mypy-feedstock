@@ -4,7 +4,8 @@ import sys
 
 # from https://mypyc.readthedocs.io/en/latest/getting_started.html#example-program
 
-Path("fib.py").write_text("""
+Path("fib.py").write_text(
+    """
 import time
 
 def fib(n: int) -> int:
@@ -16,7 +17,9 @@ def fib(n: int) -> int:
 t0 = time.time()
 fib(32)
 print(time.time() - t0)
-""", encoding="utf-8")
+""",
+    encoding="utf-8",
+)
 
 subprocess.check_call(["mypyc", "fib.py"])
 

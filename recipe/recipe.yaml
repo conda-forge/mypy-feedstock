@@ -3,6 +3,7 @@ schema_version: 1
 
 context:
   version: "2.1.0"
+  # used in host and run
   ast_serialize_min: "0.3.0"
   ast_serialize_max: "1.0.0"
   mypy_extensions_min: "1.0.0"
@@ -12,8 +13,10 @@ context:
   typing_extensions_min: "4.6.0"
   psutil_min: "4.0"
   setuptools_min: "77.0.3"
-  py_bin: ${{ "so" if unix else "pyd" }}
+  # test
+  python_self_check: "3.10"
   python_check_max: "3.14"
+  py_bin: ${{ "so" if unix else "pyd" }}
 
 recipe:
   name: mypy-split
@@ -25,6 +28,9 @@ source:
 
 build:
   number: 0
+  # fails after two hours with:
+  # {standard input}:19746030: Error: operand out of range (0xfffffffffdfce3e8 is not between 0xfffffffffe000000 and 0x1fffffc)
+  skip: target_platform == "linux-ppc64le" and "cp314t" in python
 
 outputs:
   - package:
@@ -84,13 +90,17 @@ outputs:
       - package_contents:
           site_packages:
             - mypy/*.${{ py_bin }}
-      - script:
+      - files:
+          source:
+            - mypy_self_check.ini
+        script:
           - mkdir tmp || md tmp
           - cd tmp
           - dmypy --help
           - mypy --help
           - stubgen --help
           - stubtest --help
+          - mypy --config-file=../mypy_self_check.ini -p mypy --python-version=${{ python_self_check }}
 
   - package:
       name: mypyc
