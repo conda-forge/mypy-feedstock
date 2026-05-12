@@ -7,7 +7,7 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/mypy-feedstock/
 About mypy
 ----------
 
-Home: http://mypy-lang.org
+Home: http://mypy-lang.org/
 
 Package license: MIT
 
@@ -15,7 +15,7 @@ Summary: Optional static typing for Python
 
 Development: https://github.com/python/mypy
 
-Documentation: http://mypy.readthedocs.io
+Documentation: http://mypy.readthedocs.io/
 
 Add type annotations to your Python programs, and use mypy to type check
 them. Mypy is essentially a Python linter on steroids, and it can catch
@@ -23,17 +23,18 @@ many programming errors by analyzing your program, without actually having
 to run it.  Mypy has a powerful type system with features such as type
 inference, gradual typing, generics and union types.
 
-
 About mypyc
 -----------
 
-Home: https://mypyc.readthedocs.io
+Home: https://mypyc.readthedocs.io/
 
 Package license: MIT
 
 Summary: Mypyc compiles Python modules to C extensions. It uses standard Python type hints to generate fast code.
 
 Development: https://github.com/python/mypy/blob/master/mypyc
+
+Documentation: http://mypy.readthedocs.io/
 
 The compiled language is a strict, gradually typed Python variant. It
 restricts the use of some dynamic Python features to gain performance,
@@ -52,7 +53,6 @@ compiled. Code tuned for mypyc can be 5x to 10x faster.
 
 Mypyc currently aims to speed up non-numeric code, such as server
 applications. Mypyc is also used to compile itself (and mypy).
-
 
 Current build status
 ====================
@@ -188,6 +188,13 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=657&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mypy-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_python3.14.____cp314" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_python3.14.____cp314t</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=657&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mypy-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_python3.14.____cp314t" alt="variant">
                 </a>
               </td>
             </tr><tr>
