@@ -90,17 +90,24 @@ outputs:
       - package_contents:
           site_packages:
             - mypy/*.${{ py_bin }}
-      - files:
-          source:
-            - mypy_self_check.ini
-        script:
+      - script:
           - mkdir tmp || md tmp
           - cd tmp
           - dmypy --help
           - mypy --help
           - stubgen --help
           - stubtest --help
-          - mypy --config-file=../mypy_self_check.ini -p mypy --python-version=${{ python_self_check }}
+      - files:
+          source:
+            - mypy_self_check.ini
+        requirements:
+          run:
+            - filelock
+            - tomli
+            - types-psutil
+            - types-pytest
+        script:
+          - mypy --config-file=mypy_self_check.ini -p mypy --python-version=${{ python_self_check }}
 
   - package:
       name: mypyc
