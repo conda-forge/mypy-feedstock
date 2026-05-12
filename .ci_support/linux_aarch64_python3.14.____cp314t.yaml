@@ -18,9 +18,5 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - 3.14.* *_cp314t
-python_min:
-- '3.10'
 target_platform:
 - linux-aarch64
-use_noarch:
-- false
