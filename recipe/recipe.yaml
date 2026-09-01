@@ -54,6 +54,7 @@ outputs:
           then:
             - python
             - cross-python_${{ host_platform }}
+            - python-librt >=${{ python_librt_min }}
         - ${{ compiler("c") }}
         - ${{ stdlib("c") }}
       host:
