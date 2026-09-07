@@ -110,7 +110,9 @@ outputs:
           run:
             - attrs
             - filelock
-            - lxml
+            - if: target_platform != "win-arm64"
+              then:
+                - lxml
             - psutil
             - pytest
             - pytest-xdist
@@ -118,9 +120,9 @@ outputs:
             - tomli
             - types-psutil
         script:
-          - if: target_platform == "linux-ppc64le"
+          - if: target_platform == "linux-ppc64le" or target_platform == "win-arm64"
             then:
-              - echo "self-check fails on linux-ppc64le"
+              - echo "self-check skipped on ${{ target_platform }}"
             else:
               # 20 tests fail due to assumptions about relative paths in site-packages
               # - pytest -vv --tb=long --color=yes --pyargs mypy
