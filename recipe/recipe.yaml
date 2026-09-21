@@ -27,7 +27,7 @@ source:
   sha256: 47c1b1207258513a9d93495f69c8be9de73916186f0e52703e8c461b7a623419
 
 build:
-  number: 1
+  number: 2
   # fails after two hours with:
   # {standard input}:19746030: Error: operand out of range (0xfffffffffdfce3e8 is not between 0xfffffffffe000000 and 0x1fffffc)
   skip: target_platform == "linux-ppc64le" and "cp314t" in python
