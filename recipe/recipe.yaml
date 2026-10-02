@@ -4,12 +4,11 @@ schema_version: 1
 context:
   version: "2.4.0"
   # used in host and run
-  ast_serialize_min: "0.6.0"
+  ast_serialize_min: "0.11.2"
   ast_serialize_max: "1.0.0"
   mypy_extensions_min: "1.0.0"
   pathspec_min: "1.0.0"
-  python_librt_min: "0.13.0"
-  tomli_min: "1.1.0"
+  python_librt_min: "0.16.0"
   typing_extensions_min: "4.6.0"
   psutil_min: "4.0"
   setuptools_min: "77.0.3"
@@ -60,7 +59,6 @@ outputs:
       host:
         - ast-serialize >=${{ ast_serialize_min }},<${{ ast_serialize_max }}
         - mypy_extensions >=${{ mypy_extensions_min }}
-        - pathspec >=${{ pathspec_min }}
         - pathspec >=${{ pathspec_min }}
         - pip
         - python
