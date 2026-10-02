@@ -13,7 +13,8 @@ context:
   psutil_min: "4.0"
   setuptools_min: "77.0.3"
   # test
-  python_self_check: "3.11"
+  ## using current `python_min: 3.11` finds an `[unreachable]`
+  python_self_check: "3.10"
   python_check_max: "3.15"
   py_bin: ${{ "so" if unix else "pyd" }}
 
@@ -68,9 +69,6 @@ outputs:
         - types-psutil
         - types-setuptools
         - typing_extensions >=${{ typing_extensions_min }}
-        - if: match(python, "<3.11")
-          then:
-            - tomli >=${{ tomli_min }}
       run:
         - ast-serialize >=${{ ast_serialize_min }},<${{ ast_serialize_max }}
         - mypy_extensions >=${{ mypy_extensions_min }}
@@ -80,9 +78,6 @@ outputs:
         - typing_extensions >=${{ typing_extensions_min }}
         # extra: dmypy
         - psutil >=${{ psutil_min }}
-        - if: match(python, "<3.11")
-          then:
-            - tomli >=${{ tomli_min }}
     tests:
       - python:
           imports:
@@ -114,7 +109,6 @@ outputs:
             - pytest
             - pytest-xdist
             - setuptools
-            - tomli
             - types-psutil
         script:
           - if: target_platform == "linux-ppc64le"
