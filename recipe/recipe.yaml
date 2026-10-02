@@ -13,7 +13,7 @@ context:
   psutil_min: "4.0"
   setuptools_min: "77.0.3"
   # test
-  python_self_check: ${{ python_min }}
+  python_self_check: "3.11"
   python_check_max: "3.15"
   py_bin: ${{ "so" if unix else "pyd" }}
 
