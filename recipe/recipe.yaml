@@ -2,20 +2,20 @@
 schema_version: 1
 
 context:
-  version: "2.3.1"
+  version: "2.4.0"
   # used in host and run
-  ast_serialize_min: "0.6.0"
+  ast_serialize_min: "0.11.2"
   ast_serialize_max: "1.0.0"
   mypy_extensions_min: "1.0.0"
   pathspec_min: "1.0.0"
-  python_librt_min: "0.13.0"
-  tomli_min: "1.1.0"
-  typing_extensions_min: "4.6.0"
+  python_librt_min: "0.16.0"
+  typing_extensions_min: "4.14.0"
   psutil_min: "4.0"
   setuptools_min: "77.0.3"
   # test
+  ## using current `python_min: 3.11` finds an `[unreachable]`
   python_self_check: "3.10"
-  python_check_max: "3.14"
+  python_check_max: "3.15"
   py_bin: ${{ "so" if unix else "pyd" }}
 
 recipe:
@@ -24,10 +24,10 @@ recipe:
 
 source:
   url: https://pypi.org/packages/source/m/mypy/mypy-${{ version }}.tar.gz
-  sha256: 47c1b1207258513a9d93495f69c8be9de73916186f0e52703e8c461b7a623419
+  sha256: 77bdaebd452f43fcfc4cc3ba94352a3ea537cd01e3f2d0879f48673d2ec00d6e
 
 build:
-  number: 2
+  number: 0
   # fails after two hours with:
   # {standard input}:19746030: Error: operand out of range (0xfffffffffdfce3e8 is not between 0xfffffffffe000000 and 0x1fffffc)
   skip: target_platform == "linux-ppc64le" and "cp314t" in python
@@ -52,15 +52,15 @@ outputs:
       build:
         - if: build_platform != host_platform
           then:
-            - python
+            - ast-serialize >=${{ ast_serialize_min }},<${{ ast_serialize_max }}
             - cross-python_${{ host_platform }}
+            - python
             - python-librt >=${{ python_librt_min }}
         - ${{ compiler("c") }}
         - ${{ stdlib("c") }}
       host:
         - ast-serialize >=${{ ast_serialize_min }},<${{ ast_serialize_max }}
         - mypy_extensions >=${{ mypy_extensions_min }}
-        - pathspec >=${{ pathspec_min }}
         - pathspec >=${{ pathspec_min }}
         - pip
         - python
@@ -69,9 +69,6 @@ outputs:
         - types-psutil
         - types-setuptools
         - typing_extensions >=${{ typing_extensions_min }}
-        - if: match(python, "<3.11")
-          then:
-            - tomli >=${{ tomli_min }}
       run:
         - ast-serialize >=${{ ast_serialize_min }},<${{ ast_serialize_max }}
         - mypy_extensions >=${{ mypy_extensions_min }}
@@ -81,9 +78,6 @@ outputs:
         - typing_extensions >=${{ typing_extensions_min }}
         # extra: dmypy
         - psutil >=${{ psutil_min }}
-        - if: match(python, "<3.11")
-          then:
-            - tomli >=${{ tomli_min }}
     tests:
       - python:
           imports:
@@ -115,7 +109,6 @@ outputs:
             - pytest
             - pytest-xdist
             - setuptools
-            - tomli
             - types-psutil
         script:
           - if: target_platform == "linux-ppc64le"
