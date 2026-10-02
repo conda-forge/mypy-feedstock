@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.3.1"
+  version: "2.4.0"
   # used in host and run
   ast_serialize_min: "0.6.0"
   ast_serialize_max: "1.0.0"
@@ -24,10 +24,10 @@ recipe:
 
 source:
   url: https://pypi.org/packages/source/m/mypy/mypy-${{ version }}.tar.gz
-  sha256: 47c1b1207258513a9d93495f69c8be9de73916186f0e52703e8c461b7a623419
+  sha256: 77bdaebd452f43fcfc4cc3ba94352a3ea537cd01e3f2d0879f48673d2ec00d6e
 
 build:
-  number: 2
+  number: 0
   # fails after two hours with:
   # {standard input}:19746030: Error: operand out of range (0xfffffffffdfce3e8 is not between 0xfffffffffe000000 and 0x1fffffc)
   skip: target_platform == "linux-ppc64le" and "cp314t" in python
