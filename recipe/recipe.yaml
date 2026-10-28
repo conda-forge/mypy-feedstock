@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.4.0"
+  version: "2.4.1"
   # used in host and run
   ast_serialize_min: "0.11.2"
   ast_serialize_max: "1.0.0"
@@ -24,7 +24,7 @@ recipe:
 
 source:
   url: https://pypi.org/packages/source/m/mypy/mypy-${{ version }}.tar.gz
-  sha256: 77bdaebd452f43fcfc4cc3ba94352a3ea537cd01e3f2d0879f48673d2ec00d6e
+  sha256: 63b590965691e540a335fa74dadf31a7069142f6b72e234689bbd244edf55623
 
 build:
   number: 0
