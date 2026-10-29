@@ -2,20 +2,19 @@
 schema_version: 1
 
 context:
-  version: "2.4.0"
+  version: "2.4.1"
   # used in host and run
-  ast_serialize_min: "0.11.2"
+  ast_serialize_min: "0.12.1"
   ast_serialize_max: "1.0.0"
   mypy_extensions_min: "1.0.0"
   pathspec_min: "1.0.0"
   python_librt_min: "0.16.0"
-  typing_extensions_min: "4.14.0"
+  typing_extensions_min: "4.16.0"
   psutil_min: "4.0"
   setuptools_min: "77.0.3"
   # test
   ## using current `python_min: 3.11` finds an `[unreachable]`
   python_self_check: "3.10"
-  python_check_max: "3.15"
   py_bin: ${{ "so" if unix else "pyd" }}
 
 recipe:
@@ -24,7 +23,7 @@ recipe:
 
 source:
   url: https://pypi.org/packages/source/m/mypy/mypy-${{ version }}.tar.gz
-  sha256: 77bdaebd452f43fcfc4cc3ba94352a3ea537cd01e3f2d0879f48673d2ec00d6e
+  sha256: 63b590965691e540a335fa74dadf31a7069142f6b72e234689bbd244edf55623
 
 build:
   number: 0
@@ -40,7 +39,7 @@ outputs:
         env:
           MYPY_USE_MYPYC: "1"
         content:
-          - ${{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation --disable-pip-version-check
+          - ${{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation --disable-pip-version-check --check-build-dependencies
       python:
         entry_points:
           - mypy = mypy.__main__:console_entry
